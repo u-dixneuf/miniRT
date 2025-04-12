@@ -12,13 +12,22 @@
 
 # define ARGS_NUM	"Incorrect number of args!\n"
 # define FILE_OPN	"Could not open file!\n"
+# define INVL_MAP	"Invalid map!\n"
+# define MLX_INIT	"Could not init mlx session!\n"
+# define WIN_INIT	"Could not create mlx window!\n"
+# define IMG_INIT	"Could not create mlx image!\n"
+# define IMG_ADDR	"Could not retrieve image address!\n"
+
+# define WIDTH	200
+# define HEIGHT	200
 
 typedef enum e_return
 {
 	R_SUCCESS,
-	R_MALLOCERR,
+	R_MALLOC,
 	R_INVALID,
-	R_FILEDESC
+	R_FILEDESC,
+	R_LIBMLX
 }	t_return;
 
 typedef struct s_ambient
@@ -68,6 +77,12 @@ typedef struct s_mlx
 	void			*mlx_ptr;
 	void			*win_ptr;
 	void			*img_ptr;
+
+	int				bpx;
+	int				sl;
+	int				e;
+
+	char			*img_addr;
 }	t_mlx;
 
 typedef struct s_minirt
@@ -109,7 +124,8 @@ void		mrt_init(t_minirt *mrt);
 void		mrt_free(void **p);
 void		mrt_free_all(t_minirt *mrt);
 
-t_return	mrt_initmlx(t_minirt *mrt);
+t_return	mrt_initmlx(t_mlx *mlx);
+void		mrt_freemlx(t_mlx mlx);
 
 /* parser */
 t_return	mrt_parser(const char *filename, t_minirt *mrt);
@@ -118,5 +134,7 @@ t_return	mrt_extract(int fd, t_minirt *mrt);
 
 /* viewer */
 t_return	mrt_viewer(t_minirt *mrt);
+
+int			mrt_trace(t_minirt *mrt, int h, int w);
 
 #endif

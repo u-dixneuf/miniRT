@@ -11,7 +11,7 @@ int	main(int ac, char **av)
 	ret = mrt_parser(av[1], &mrt);
 	if (ret)
 		return (mrt_free_all(&mrt), ret);
-	ret = mrt_initmlx(&mrt);
+	ret = mrt_initmlx(&mrt.mlx);
 	if (ret)
 		return (mrt_free_all(&mrt), ret);
 	ret = mrt_viewer(&mrt);

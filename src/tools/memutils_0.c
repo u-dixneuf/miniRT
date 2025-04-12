@@ -28,5 +28,8 @@ void	mrt_free(void **p)
 
 void	mrt_free_all(t_minirt *mrt)
 {
-	(void)mrt;
+	mrt_free((void **)mrt->sphere);
+	mrt_free((void **)mrt->plane);
+	mrt_free((void **)mrt->cylinder);
+	mrt_freemlx(mrt->mlx);
 }
