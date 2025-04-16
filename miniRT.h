@@ -3,16 +3,22 @@
 
 # include <unistd.h>
 # include <stdio.h>
+# include <fcntl.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <string.h>
 # include <errno.h>
+#include <stdint.h>
 # include <math.h>
-# include "src/libmlx/mlx.h"
-# include "src/libmlx/mlx_int.h"
+// # include "src/libmlx/mlx.h"
+// # include "src/libmlx/mlx_int.h"
 
 # define ARGS_NUM	"Incorrect number of args!\n"
 # define FILE_OPN	"Could not open file!\n"
+# define CNT_SPLT	"Could not split content\n"
 # define INVL_MAP	"Invalid map!\n"
+# define INVL_ID	"Invalid identifier\n"
+# define DBLCAPID	"Elements which are defined by a capital letter can only be declared once in the scene.\n"
 # define MLX_INIT	"Could not init mlx session!\n"
 # define WIN_INIT	"Could not create mlx window!\n"
 # define IMG_INIT	"Could not create mlx image!\n"
@@ -24,20 +30,36 @@
 typedef enum e_return
 {
 	R_SUCCESS,
+	R_FAILURE,
 	R_MALLOC,
 	R_INVALID,
 	R_FILEDESC,
-	R_LIBMLX
+	R_CNTSPLT,
+	R_LIBMLX,
+	R_DBLCAPID
 }	t_return;
+
+typedef enum e_id
+{
+	ID_AMBIENT,
+	ID_CAMERA,
+	ID_LIGHT,
+	ID_SPHERE,
+	ID_PLANE,
+	ID_CYLINDER,
+	ID_INVALID
+}	t_id;
 
 typedef struct s_ambient
 {
+	bool			is_set;
 	double			ratio;
 	int32_t			color[3];
 }	t_ambient;
 
 typedef struct s_camera
 {
+	bool			is_set;
 	double			pos[3];
 	double			vector[3];
 	int32_t			fov;
@@ -45,6 +67,7 @@ typedef struct s_camera
 
 typedef struct s_light
 {
+	bool			is_set;
 	double			pos[3];
 	double			ratio;
 }	t_light;
@@ -90,47 +113,54 @@ typedef struct s_minirt
 	t_ambient		ambient;
 	t_camera		camera;
 	t_light			light;
-	u_int32_t		n_sphere;
+	uint32_t		n_sphere;
 	t_sphere		*sphere;
-	u_int32_t		n_plane;
+	uint32_t		n_plane;
 	t_plane			*plane;
-	u_int32_t		n_cylinder;
+	uint32_t		n_cylinder;
 	t_cylinder		*cylinder;
 
 	t_mlx			mlx;
 }	t_minirt;
 
-# define BUFFER_SIZE 20
-
-typedef struct s_buff
-{
-	char			content[BUFFER_SIZE];
-	ssize_t			length;
-	char			end;
-	struct s_buff	*next;
-}	t_buff;
 
 /* tools */
+// stools
+uint64_t	mrt_strlcpy(char *dst, const char *src, uint64_t dstsize);
+int32_t		mrt_strncmp(const char *s1, const char *s2, size_t n);
+int32_t		mrt_strcmp(const char *s1, const char *s2);
+bool		mrt_strchr(const char *s, int c);
+uint32_t	mrt_strlen(const char *s);
+char		*mrt_strdup(const char *s);
+
+bool		mrt_getdouble(char *str, double *nb);
+bool		mrt_getcolor(char *str, uint32_t *value, int32_t max);
+
+char		**mrt_split(char const *s, char c);
+
 void		mrt_error(const char *error_msg);
-u_int32_t	mrt_strlen(const char *s);
+bool		mrt_isspace(int c);
 
-char		*mrt_getline(int fd);
-void		link_check_buff(t_buff *p_plus, t_buff *p_buff);
-char		*return_line(t_buff *p_plus);
-void		free_buff(t_buff *p_plus);
+// ftools;
+# define	FREAD_SIZE 1024
 
-void		mrt_memset(void *p, int c, u_int32_t size);
-void		mrt_init(t_minirt *mrt);
+char		*mrt_readfile(char *filename);
+
+// memtools
+void		*mrt_calloc(size_t count, size_t size);
+void		mrt_memset(void *p, int c, uint32_t size);
 void		mrt_free(void **p);
+void		mrt_free_arr(char **arr);
 void		mrt_free_all(t_minirt *mrt);
 
+t_return	mrt_init(t_minirt *mrt);
 t_return	mrt_initmlx(t_mlx *mlx);
 void		mrt_freemlx(t_mlx mlx);
 
 /* parser */
 t_return	mrt_parser(const char *filename, t_minirt *mrt);
 
-t_return	mrt_extract(int fd, t_minirt *mrt);
+t_return	mrt_extract(t_minirt *mrt, char *line);
 
 /* viewer */
 t_return	mrt_viewer(t_minirt *mrt);

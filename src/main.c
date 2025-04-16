@@ -7,7 +7,8 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		return (mrt_error(ARGS_NUM), R_INVALID);
-	mrt_init(&mrt);
+	if (mrt_init(&mrt))
+		return (R_MALLOC);
 	ret = mrt_parser(av[1], &mrt);
 	if (ret)
 		return (mrt_free_all(&mrt), ret);

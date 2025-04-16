@@ -1,63 +1,38 @@
 #include "../../miniRT.h"
 
-static void	check_plus(t_buff *p_plus);
-static char	*get_line(int fd, t_buff *p_plus);
-
-char	*mrt_getline(int fd)
+int32_t	mrt_strncmp(const char *s1, const char *s2, size_t n)
 {
-	static t_buff	plus;
+	size_t	i;
 
-	if (read(fd, NULL, 0) == -1)
-	{
-		plus.length = 0;
-		return (NULL);
-	}
-	if (BUFFER_SIZE <= 0)
-		return (NULL);
-	plus.next = NULL;
-	return (get_line(fd, &plus));
-}
-
-static void	check_plus(t_buff *p_plus)
-{
-	ssize_t	i;
-
-	p_plus->end = 0;
 	i = 0;
-	while (i < p_plus->length)
+	while (i < n && (s1[i] != '\0' || s2[i] != '\0'))
 	{
-		if ((p_plus->content)[i] == '\n')
-		{
-			p_plus->end = 1;
-			break ;
-		}
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 		i++;
 	}
+	return (0);
 }
 
-static char	*get_line(int fd, t_buff *p_plus)
+int32_t	mrt_strcmp(const char *s1, const char *s2)
 {
-	t_buff	*p_buff;
+	uint32_t	i;
 
-	check_plus(p_plus);
-	p_buff = p_plus;
-	while (!(p_buff->end))
-	{
-		p_buff = (t_buff *)malloc(sizeof(t_buff));
-		if (!p_buff)
-		{
-			free_buff(p_plus);
-			return (NULL);
-		}
-		p_buff->length = read(fd, p_buff->content, BUFFER_SIZE);
-		if (p_buff->length == -1)
-		{
-			p_plus->length = 0;
-			free(p_buff);
-			free_buff(p_plus);
-			return (NULL);
-		}
-		link_check_buff(p_plus, p_buff);
-	}
-	return (return_line(p_plus));
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i += 1;
+	return (s1[i] - s2[i]);
+}
+
+char	*mrt_strdup(const char *s)
+{
+	char	*c;
+
+	if (!s)
+		return (NULL);
+	c = (char *)malloc(sizeof(char) * (minishell_strlen(s) + 1));
+	if (c == NULL)
+		return (NULL);
+	minishell_strlcpy(c, s, minishell_strlen(s) + 1);
+	return (c);
 }

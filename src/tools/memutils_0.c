@@ -1,8 +1,22 @@
 #include "../../miniRT.h"
 
-void	mrt_memset(void *p, int c, u_int32_t size)
+void	*mrt_calloc(size_t count, size_t size)
 {
-	u_int32_t	i;
+	void	*ptr;
+
+	if ((int)count < 0 && (int)size < 0)
+		return (0);
+	ptr = malloc(count * size);
+	if (!ptr)
+		return (0);
+	minishell_memset(ptr, 0, count * size);
+	return (ptr);
+}
+
+
+t_return	mrt_memset(void *p, int c, uint32_t size)
+{
+	uint32_t	i;
 
 	i = 0;
 	while (i < size)
@@ -12,24 +26,13 @@ void	mrt_memset(void *p, int c, u_int32_t size)
 	}
 }
 
-void	mrt_init(t_minirt *mrt)
+t_return	mrt_init(t_minirt *mrt)
 {
-	mrt_memset(mrt, 0, sizeof(t_minirt)); // i guess it's enough
-}
+	mrt = mrt_calloc(1, sizeof(mrt));
+	if (!mrt)
+		return (R_MALLOC);
+	return (R_SUCCESS);
 
-void	mrt_free(void **p)
-{
-	if (p && *p)
-	{
-		free(*p);
-		*p = NULL;
-	}
-}
-
-void	mrt_free_all(t_minirt *mrt)
-{
-	mrt_free((void **)mrt->sphere);
-	mrt_free((void **)mrt->plane);
-	mrt_free((void **)mrt->cylinder);
-	mrt_freemlx(mrt->mlx);
+	// brooh??
+	//mrt_memset(mrt, 0, sizeof(t_minirt)); // i guess it's enough
 }
