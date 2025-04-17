@@ -48,7 +48,7 @@ t_return	mrt_extract(t_minirt *mrt, char *line)
 		return (R_SUCCESS);
 	info = mrt_split(line, " ");
 	if (!info)
-		return (mrt_error(CNT_SPLT), R_CNTSPLT);
+		return (mrt_error(LCNT_SPLT), R_FCNTSPLT);
 	ret = extract_info(mrt, info);
 	mrt_free_arr(info);
 	if (ret == R_DBLCAPID)

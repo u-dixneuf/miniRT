@@ -12,7 +12,7 @@ t_return	mrt_parser(const char *filename, t_minirt *mrt)
 	flines = mrt_split(fcontent, '\n');
 	mrt_free((void **)&fcontent);
 	if (!flines)
-		return (mrt_error(CNT_SPLT), R_CNTSPLT);
+		return (mrt_error(FCNT_SPLT), R_FCNTSPLT);
 	while (*flines)
 	{
 		ret = mrt_extract(mrt, *flines);

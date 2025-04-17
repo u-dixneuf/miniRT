@@ -13,16 +13,55 @@
 // # include "src/libmlx/mlx.h"
 // # include "src/libmlx/mlx_int.h"
 
-# define ARGS_NUM	"Incorrect number of args!\n"
-# define FILE_OPN	"Could not open file!\n"
-# define CNT_SPLT	"Could not split content\n"
-# define INVL_MAP	"Invalid map!\n"
-# define INVL_ID	"Invalid identifier\n"
-# define DBLCAPID	"Elements which are defined by a capital letter can only be declared once in the scene.\n"
-# define MLX_INIT	"Could not init mlx session!\n"
-# define WIN_INIT	"Could not create mlx window!\n"
-# define IMG_INIT	"Could not create mlx image!\n"
-# define IMG_ADDR	"Could not retrieve image address!\n"
+# define ARGS_NUM	"[!!] Incorrect number of args!\n"
+
+# define FILE_OPN	"[!!] Could not open file!\n"
+
+# define FCNT_SPLT					"[!!] Could not split file content\n"
+# define LCNT_SPLT					"[!!] Could not split line content\n"
+# define CLR_SPLT					"[!!] Could not split colors\n"
+# define CRD_SPLT					"[!!] Could not split coordinates\n"
+# define VEC_SPLT					"[!!] Could not split vector\n"
+
+# define INVL_MAP					"[!!] Invalid Map!\n"
+# define INVL_ID					"[!!] Invalid Identifier\n"
+
+# define INVL_AMBIENT_RATIO			"[!!] Invalid Ambient Ratio\n"
+# define INVL_AMBIENT_COLORS		"[!!] Invalid Ambient Color\n"
+# define INVL_AMBIENT_INFO			"[!!] Extra Ambient Info\n"
+
+# define INVL_CAMERA_COORDINATES	"[!!] Invalid Camera Coordinates\n"
+# define INVL_CAMERA_VECTOR			"[!!] Invalid Camera Vector\n"
+# define INVL_CAMERA_FOV			"[!!] Invalid Camera FOV\n"
+# define INVL_CAMERA_INFO			"[!!] Extra Camera Info\n"
+
+# define INVL_LIGHT_COORDINATES		"[!!] Invalid Light Coordinates\n"
+# define INVL_LIGHT_RATIO			"[!!] Invalid Light Ratio\n"
+# define INVL_LIGHT_INFO			"[!!] Extra Light Info\n"
+
+# define INVL_SPHERE_COORDINATES	"[!!] Invalid Sphere Coordinates\n"
+# define INVL_SPHERE_COLOR			"[!!] Invalid Sphere Color\n"
+# define INVL_SPHERE_DIAMETER		"[!!] Invalid Sphere Diameter\n"
+# define INVL_SPHERE_INFO			"[!!] Extra Sphere Info\n"
+
+# define INVL_PLANE_COORDINATES		"[!!] Invalid Plan Coordinates\n"
+# define INVL_PLANE_VECTOR			"[!!] Invalid Plane Vector\n"
+# define INVL_PLANE_COLOR		  	"[!!] Invalid Plane Color\n"
+# define INVL_PLANE_INFO			"[!!] Extra Plane Info\n"
+
+# define INVL_CYLINDER_COORDINATES	"[!!] Invalid Cylinder Coordinates\n"
+# define INVL_CYLINDER_VECTOR		"[!!] Invalid Cylinder Vector\n"
+# define INVL_CYLINDER_DIAMETER		"[!!] Invalid Cylinder Diameter\n"
+# define INVL_CYLINDER_HEIGHT		"[!!] Invalid Plane Height\n"
+# define INVL_CYLINDER_COLOR		"[!!] Invalid Cylinder Color\n"
+# define INVL_CYLINDER_INFO			"[!!] Extra Cylinder Info\n"
+
+# define MLX_INIT					"[!!] Could not init mlx session!\n"
+# define WIN_INIT					"[!!] Could not create mlx window!\n"
+# define IMG_INIT					"[!!] Could not create mlx image!\n"
+# define IMG_ADDR					"[!!] Could not retrieve image address!\n"
+
+# define DBLCAPID	"[ii] Elements which are defined by a capital letter can only be declared once in the scene.\n"
 
 # define WIDTH	200
 # define HEIGHT	200
@@ -34,7 +73,7 @@ typedef enum e_return
 	R_MALLOC,
 	R_INVALID,
 	R_FILEDESC,
-	R_CNTSPLT,
+	R_FCNTSPLT,
 	R_LIBMLX,
 	R_DBLCAPID
 }	t_return;
@@ -77,6 +116,7 @@ typedef struct s_sphere
 	double			pos[3];
 	double			diameter;
 	int32_t			color[3];
+	struct s_sphere	*next;
 }	t_sphere;
 
 typedef struct s_plane
@@ -84,15 +124,17 @@ typedef struct s_plane
 	double			pos[3];
 	double			vector[3];
 	int32_t			color[3];
+	struct s_plane	*next;
 }	t_plane;
 
 typedef struct s_cylinder
 {
-	double			pos[3];
-	double			vector[3];
-	double			diameter;
-	double			height;
-	int32_t			color[3];
+	double				pos[3];
+	double				vector[3];
+	double				diameter;
+	double				height;
+	int32_t				color[3];
+	struct s_cylinder	*next;
 }	t_cylinder;
 
 typedef struct s_mlx
@@ -101,9 +143,9 @@ typedef struct s_mlx
 	void			*win_ptr;
 	void			*img_ptr;
 
-	int				bpx;
-	int				sl;
-	int				e;
+	int32_t			bpx;
+	int32_t			sl;
+	int32_t			e;
 
 	char			*img_addr;
 }	t_mlx;
@@ -133,8 +175,11 @@ bool		mrt_strchr(const char *s, int c);
 uint32_t	mrt_strlen(const char *s);
 char		*mrt_strdup(const char *s);
 
-bool		mrt_getdouble(char *str, double *nb);
-bool		mrt_getcolor(char *str, uint32_t *value, int32_t max);
+bool		mrt_setdouble(char *str, double *nb);
+bool		mrt_setuint32(char *str, uint32_t *value, int32_t max);
+bool		mrt_setcolor(char *str, uint32_t *color[]);
+bool		mrt_setcords(char *str, double *cords[]);
+bool		mrt_setvector(char *str, double *vector[]);
 
 char		**mrt_split(char const *s, char c);
 
@@ -152,6 +197,11 @@ void		mrt_memset(void *p, int c, uint32_t size);
 void		mrt_free(void **p);
 void		mrt_free_arr(char **arr);
 void		mrt_free_all(t_minirt *mrt);
+
+// links
+t_sphere	*add_sphere(t_minirt *mrt);
+t_plane		*add_plane(t_minirt *mrt);
+t_cylinder	*add_cylinder(t_minirt *mrt);
 
 t_return	mrt_init(t_minirt *mrt);
 t_return	mrt_initmlx(t_mlx *mlx);
