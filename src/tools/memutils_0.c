@@ -9,12 +9,12 @@ void	*mrt_calloc(size_t count, size_t size)
 	ptr = malloc(count * size);
 	if (!ptr)
 		return (0);
-	minishell_memset(ptr, 0, count * size);
+	mrt_memset(ptr, 0, count * size);
 	return (ptr);
 }
 
 
-t_return	mrt_memset(void *p, int c, uint32_t size)
+void	mrt_memset(void *p, int c, uint32_t size)
 {
 	uint32_t	i;
 
@@ -28,11 +28,11 @@ t_return	mrt_memset(void *p, int c, uint32_t size)
 
 t_return	mrt_init(t_minirt *mrt)
 {
-	mrt = mrt_calloc(1, sizeof(mrt));
-	if (!mrt)
-		return (R_MALLOC);
-	return (R_SUCCESS);
+//	mrt = mrt_calloc(1, sizeof(mrt));
+//	if (!mrt)
+//		return (R_MALLOC);
 
-	// brooh??
-	//mrt_memset(mrt, 0, sizeof(t_minirt)); // i guess it's enough
+// brooh??
+mrt_memset(mrt, 0, sizeof(t_minirt)); // i guess it's enough
+return (R_SUCCESS);
 }

@@ -28,7 +28,7 @@ bool	mrt_setdouble(char *str, double *nb)
 		return (false);
 	*nb = 0;
 	sign = 1;
-	while (is_space(*str))
+	while (mrt_isspace(*str))
 		str++;
 	if (*str == '+' || *str == '-')
 	{
@@ -47,7 +47,7 @@ bool	mrt_setdouble(char *str, double *nb)
 	return (true);
 }
 
-bool	mrt_setuint32(char *str, uint32_t *value, int32_t max)
+bool	mrt_setuint32(char *str, uint32_t *value, uint32_t max)
 {
 	uint32_t	res;
 
@@ -69,53 +69,56 @@ bool	mrt_setuint32(char *str, uint32_t *value, int32_t max)
 	return (true);
 }
 
-bool	mrt_setcolor(char *str, uint32_t *color[])
+bool	mrt_setcolor(char *str, uint32_t color[])
 {
 	char	**colors;
 
 	colors = mrt_split(str, ',');
 	if (!colors)
 		return (mrt_error(CLR_SPLT), false);
-	if (!mrt_setuint32(*colors, color, 255))
+	if (!mrt_setuint32(*colors, &color[0], 255))
 		return (false);
-	if (!mrt_setuint32(++(*colors), ++color, 255))
+	if (!mrt_setuint32(*(++colors), &color[1], 255))
 		return (false);
-	if (!mrt_setuint32(++(*colors), ++color, 255))
+	if (!mrt_setuint32(*(++colors), &color[2], 255))
 		return (false);
-	if (++color)
+	if (*(++colors))
 		return (false);
+	return (true);
 }
 
-bool	mrt_setcords(char *str, double	*cord[])
+bool	mrt_setcords(char *str, double	cord[])
 {
 	char **cords;
 
 	cords = mrt_split(str, ',');
 	if (!cords)
 		return (mrt_error(CRD_SPLT), false);
-	if (!mrt_setdouble(*cords, cord))
+	if (!mrt_setdouble(*cords, &cord[0]))
 		return (false);
-	if (!mrt_setdouble(++(*cords), ++cord))
+	if (!mrt_setdouble(*(++cords), &cord[1]))
 		return (false);
-	if (!mrt_setdouble(++(*cords), ++cord))
+	if (!mrt_setdouble(*(++cords), &cord[2]))
 		return (false);
-	if (++cords)
+	if (*(++cords))
 		return (false);
+	return (true);
 }
 
-bool	mrt_setvector(char *str, double *vector[])
+bool	mrt_setvector(char *str, double vector[])
 {
 	char	**v;
 
 	v = mrt_split(str, ',');
 	if (!v)
 		return (mrt_error(VEC_SPLT), false);
-	if (!mrt_setdouble(*v, vector) || (*vector > 1 || *vector < -1))
+	if (!mrt_setdouble(*v, &vector[0]) || (vector[0] > 1.0 || vector[0] < -1.0))
 		return (false);
-	if (!mrt_setdouble(++(*v), ++vector) || (*vector > 1 || *vector < -1))
+	if (!mrt_setdouble(*(++v), &vector[1]) || (vector[1] > 1.0 || vector[1] < -1.0))
 		return (false);
-	if (!mrt_setdouble(++(*v), ++vector) || (*vector > 1 || *vector < -1))
+	if (!mrt_setdouble(*(++v), &vector[2]) || (vector[2] > 1.0 || vector[2] < -1.0))
 		return (false);
-	if (++v)
+	if (*(++v))
 		return (false);
+	return (true);
 }

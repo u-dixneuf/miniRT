@@ -30,9 +30,10 @@ char	*mrt_strdup(const char *s)
 
 	if (!s)
 		return (NULL);
-	c = (char *)malloc(sizeof(char) * (minishell_strlen(s) + 1));
+	c = (char *)mrt_calloc(1, sizeof(char) * (mrt_strlen(s) + 1));
 	if (c == NULL)
 		return (NULL);
-	minishell_strlcpy(c, s, minishell_strlen(s) + 1);
+	mrt_strlcpy(c, s, mrt_strlen(s) + 1);
 	return (c);
 }
+

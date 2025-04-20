@@ -18,7 +18,17 @@ static char	*readfile_join(const char *s1, const char *s2)
 	return (res);
 }
 
-char	*mrt_readfile(char *filename)
+static bool	check_ext(const char *filename)
+{
+	char	*ext;
+
+	ext = mrt_strrchr(filename, '.');
+	if (!ext || mrt_strcmp(ext, ".rt"))
+		return (false);
+	return (true);
+}
+
+char	*mrt_readfile(const char *filename)
 {
 	int32_t	fd;
 	int32_t	rbytes;
@@ -26,6 +36,8 @@ char	*mrt_readfile(char *filename)
 	char	*data;
 	char	*p;
 
+	if (!check_ext(filename))
+		return (mrt_error(INVL_EXT), NULL);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (NULL);

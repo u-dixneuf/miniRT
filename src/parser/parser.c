@@ -2,9 +2,10 @@
 
 t_return	mrt_parser(const char *filename, t_minirt *mrt)
 {
-	char		fcontent;
+	char		*fcontent;
 	char 		**flines;
 	t_return	ret;
+	int32_t		i;
 
 	fcontent = mrt_readfile(filename);
 	if (!fcontent)
@@ -13,12 +14,13 @@ t_return	mrt_parser(const char *filename, t_minirt *mrt)
 	mrt_free((void **)&fcontent);
 	if (!flines)
 		return (mrt_error(FCNT_SPLT), R_FCNTSPLT);
-	while (*flines)
+	i = 0;
+	while (flines[i])
 	{
-		ret = mrt_extract(mrt, *flines);
+		ret = mrt_extract(mrt, flines[i]);
 		if (ret)
 			return (mrt_free_arr(flines), ret);
-		flines++;
+		i++;
 	}
 	return (mrt_free_arr(flines), R_SUCCESS);
 }

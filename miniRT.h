@@ -23,6 +23,7 @@
 # define CRD_SPLT					"[!!] Could not split coordinates\n"
 # define VEC_SPLT					"[!!] Could not split vector\n"
 
+# define INVL_EXT					"[!!] Invalid File Extention\n"
 # define INVL_MAP					"[!!] Invalid Map!\n"
 # define INVL_ID					"[!!] Invalid Identifier\n"
 
@@ -93,7 +94,7 @@ typedef struct s_ambient
 {
 	bool			is_set;
 	double			ratio;
-	int32_t			color[3];
+	uint32_t		color[3];
 }	t_ambient;
 
 typedef struct s_camera
@@ -101,7 +102,7 @@ typedef struct s_camera
 	bool			is_set;
 	double			pos[3];
 	double			vector[3];
-	int32_t			fov;
+	uint32_t		fov;
 }	t_camera;
 
 typedef struct s_light
@@ -115,7 +116,7 @@ typedef struct s_sphere
 {
 	double			pos[3];
 	double			diameter;
-	int32_t			color[3];
+	uint32_t		color[3];
 	struct s_sphere	*next;
 }	t_sphere;
 
@@ -123,7 +124,7 @@ typedef struct s_plane
 {
 	double			pos[3];
 	double			vector[3];
-	int32_t			color[3];
+	uint32_t		color[3];
 	struct s_plane	*next;
 }	t_plane;
 
@@ -133,7 +134,7 @@ typedef struct s_cylinder
 	double				vector[3];
 	double				diameter;
 	double				height;
-	int32_t				color[3];
+	uint32_t			color[3];
 	struct s_cylinder	*next;
 }	t_cylinder;
 
@@ -169,17 +170,19 @@ typedef struct s_minirt
 /* tools */
 // stools
 uint64_t	mrt_strlcpy(char *dst, const char *src, uint64_t dstsize);
+uint64_t	mrt_strlcat(char *dst, const char *src, size_t size);
 int32_t		mrt_strncmp(const char *s1, const char *s2, size_t n);
 int32_t		mrt_strcmp(const char *s1, const char *s2);
 bool		mrt_strchr(const char *s, int c);
+char		*mrt_strrchr(const char *s, int c);
 uint32_t	mrt_strlen(const char *s);
 char		*mrt_strdup(const char *s);
 
 bool		mrt_setdouble(char *str, double *nb);
-bool		mrt_setuint32(char *str, uint32_t *value, int32_t max);
-bool		mrt_setcolor(char *str, uint32_t *color[]);
-bool		mrt_setcords(char *str, double *cords[]);
-bool		mrt_setvector(char *str, double *vector[]);
+bool		mrt_setuint32(char *str, uint32_t *value, uint32_t max);
+bool		mrt_setcolor(char *str, uint32_t color[]);
+bool		mrt_setcords(char *str, double cords[]);
+bool		mrt_setvector(char *str, double vector[]);
 
 char		**mrt_split(char const *s, char c);
 
@@ -189,7 +192,7 @@ bool		mrt_isspace(int c);
 // ftools;
 # define	FREAD_SIZE 1024
 
-char		*mrt_readfile(char *filename);
+char		*mrt_readfile(const char *filename);
 
 // memtools
 void		*mrt_calloc(size_t count, size_t size);
@@ -211,6 +214,12 @@ void		mrt_freemlx(t_mlx mlx);
 t_return	mrt_parser(const char *filename, t_minirt *mrt);
 
 t_return	mrt_extract(t_minirt *mrt, char *line);
+t_return	extract_ambient(t_minirt *mrt, char **info);
+t_return	extract_camera(t_minirt *mrt, char **info);
+t_return	extract_light(t_minirt *mrt, char **info);
+t_return	extract_sphere(t_minirt *mrt, char **info);
+t_return	extract_plane(t_minirt *mrt, char **info);
+t_return	extract_cylinder(t_minirt *mrt, char **info);
 
 /* viewer */
 t_return	mrt_viewer(t_minirt *mrt);
