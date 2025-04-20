@@ -27,10 +27,25 @@ void	mrt_free(void **p)
 	}
 }
 
-void	mrt_free_all(t_minirt *mrt)
+void free_link(void *obj)
 {
-	mrt_free((void **)mrt->sphere);
-	mrt_free((void **)mrt->plane);
-	mrt_free((void **)mrt->cylinder);
-	mrt_freemlx(mrt->mlx);
+	void	*next;
+
+    if (obj)
+    {
+        while (obj)
+        {
+            next = *(void **)((char *)obj);
+            mrt_free(&obj);
+            obj = next;
+        }
+    }
+}
+
+void mrt_free_all(t_minirt *mrt)
+{
+    free_link((void *)mrt->sphere);
+    free_link((void *)mrt->plane);
+    free_link((void *)mrt->cylinder);
+    mrt_freemlx(mrt->mlx);
 }

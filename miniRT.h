@@ -114,28 +114,28 @@ typedef struct s_light
 
 typedef struct s_sphere
 {
+	struct s_sphere	*next;
 	double			pos[3];
 	double			diameter;
 	uint32_t		color[3];
-	struct s_sphere	*next;
 }	t_sphere;
 
 typedef struct s_plane
 {
+	struct s_plane	*next;
 	double			pos[3];
 	double			vector[3];
 	uint32_t		color[3];
-	struct s_plane	*next;
 }	t_plane;
 
 typedef struct s_cylinder
 {
+	struct s_cylinder	*next;
 	double				pos[3];
 	double				vector[3];
 	double				diameter;
 	double				height;
 	uint32_t			color[3];
-	struct s_cylinder	*next;
 }	t_cylinder;
 
 typedef struct s_mlx

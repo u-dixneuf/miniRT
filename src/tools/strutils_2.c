@@ -63,7 +63,7 @@ bool	mrt_setuint32(char *str, uint32_t *value, uint32_t max)
 		res = (*str - 48) + (res * 10);
 		str++;
 	}
-	if (res > max)
+	if (*str || res > max)
 		return (false);
 	*value = res;
 	return (true);
@@ -72,53 +72,59 @@ bool	mrt_setuint32(char *str, uint32_t *value, uint32_t max)
 bool	mrt_setcolor(char *str, uint32_t color[])
 {
 	char	**colors;
+	char	**s;
 
 	colors = mrt_split(str, ',');
 	if (!colors)
 		return (mrt_error(CLR_SPLT), false);
+	s = colors;
 	if (!mrt_setuint32(*colors, &color[0], 255))
-		return (false);
+		return (mrt_free_arr(s), false);
 	if (!mrt_setuint32(*(++colors), &color[1], 255))
-		return (false);
+		return (mrt_free_arr(s), false);
 	if (!mrt_setuint32(*(++colors), &color[2], 255))
-		return (false);
+		return (mrt_free_arr(s), false);
 	if (*(++colors))
-		return (false);
-	return (true);
+		return (mrt_free_arr(colors), false);
+	return (mrt_free_arr(s), true);
 }
 
 bool	mrt_setcords(char *str, double	cord[])
 {
-	char **cords;
+	char	**cords;
+	char	**s;
 
 	cords = mrt_split(str, ',');
 	if (!cords)
 		return (mrt_error(CRD_SPLT), false);
+	s = cords;
 	if (!mrt_setdouble(*cords, &cord[0]))
-		return (false);
+		return (mrt_free_arr(s), false);
 	if (!mrt_setdouble(*(++cords), &cord[1]))
-		return (false);
+		return (mrt_free_arr(s), false);
 	if (!mrt_setdouble(*(++cords), &cord[2]))
-		return (false);
+		return (mrt_free_arr(s), false);
 	if (*(++cords))
-		return (false);
-	return (true);
+		return (mrt_free_arr(cords), false);
+	return (mrt_free_arr(s), true);
 }
 
 bool	mrt_setvector(char *str, double vector[])
 {
 	char	**v;
+	char	**s;
 
 	v = mrt_split(str, ',');
 	if (!v)
 		return (mrt_error(VEC_SPLT), false);
+	s = v;
 	if (!mrt_setdouble(*v, &vector[0]) || (vector[0] > 1.0 || vector[0] < -1.0))
-		return (false);
+		return (mrt_free_arr(s), false);
 	if (!mrt_setdouble(*(++v), &vector[1]) || (vector[1] > 1.0 || vector[1] < -1.0))
-		return (false);
+		return (mrt_free_arr(s), false);
 	if (!mrt_setdouble(*(++v), &vector[2]) || (vector[2] > 1.0 || vector[2] < -1.0))
-		return (false);
+		return (mrt_free_arr(s), false);
 	if (*(++v))
-		return (false);
-	return (true);
+		return (mrt_free_arr(s), false);
+	return (mrt_free_arr(s), true);
 }

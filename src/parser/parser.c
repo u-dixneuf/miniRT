@@ -19,7 +19,12 @@ t_return	mrt_parser(const char *filename, t_minirt *mrt)
 	{
 		ret = mrt_extract(mrt, flines[i]);
 		if (ret)
+		{
+			write(STDOUT_FILENO, "\t\\__LINE: ", 10);
+			write(STDOUT_FILENO, flines[i], mrt_strlen(flines[i]));
+			write(STDOUT_FILENO, "\n", 1);
 			return (mrt_free_arr(flines), ret);
+		}
 		i++;
 	}
 	return (mrt_free_arr(flines), R_SUCCESS);

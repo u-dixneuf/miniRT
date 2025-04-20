@@ -29,11 +29,11 @@ t_return	extract_info(t_minirt *mrt, char **info)
 	else if (id == ID_LIGHT)
 		return (extract_light(mrt, ++info));
 	else if (id == ID_SPHERE)
-		extract_sphere(mrt, ++info);
+		return (extract_sphere(mrt, ++info));
 	else if (id == ID_PLANE)
-		extract_plane(mrt, ++info);
+		return (extract_plane(mrt, ++info));
 	else if (id == ID_CYLINDER)
-		extract_cylinder(mrt, ++info);
+		return (extract_cylinder(mrt, ++info));
 	else
 		return (mrt_error(INVL_ID), R_INVALID);
 	return (R_SUCCESS);
