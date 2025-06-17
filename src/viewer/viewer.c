@@ -36,9 +36,10 @@ static int	mrt_trace(t_minirt *mrt, int h, int w)
 
 	mrt_memset(&ray, 0, sizeof(t_ray));
 	get_vector(mrt->camera, &ray);
-	check_sphere(mrt->n_sphere, mrt->sphere);
 	check_plane(mrt->n_plane, mrt->plane);
-	check_cylinder(mrt->n_cylinder, mrt->cylinder);
+	check_sphere(mrt->n_sphere, mrt->sphere);
+	if (!ray.inside_obj)
+		check_cylinder(mrt->n_cylinder, mrt->cylinder);
 	get_color(&ray, mrt->ambient, mrt->light);
 	return (ray.color);
 }
