@@ -1,5 +1,7 @@
 #include "../../miniRT.h"
 
+static int	mrt_trace(t_minirt *mrt, int h, int w);
+
 t_return	mrt_viewer(t_minirt *mrt)
 {
 	t_mlx	*m;
@@ -26,4 +28,17 @@ t_return	mrt_viewer(t_minirt *mrt)
 	}
 	mlx_put_image_to_window(m->mlx_ptr, m->win_ptr, m->img_ptr, 0, 0);
 	return (R_SUCCESS);
+}
+
+static int	mrt_trace(t_minirt *mrt, int h, int w)
+{
+	t_ray	ray;
+
+	mrt_memset(&ray, 0, sizeof(t_ray));
+	get_vector(mrt->camera, &ray);
+	check_sphere(mrt->n_sphere, mrt->sphere);
+	check_plane(mrt->n_plane, mrt->plane);
+	check_cylinder(mrt->n_cylinder, mrt->cylinder);
+	get_color(&ray, mrt->ambient, mrt->light);
+	return (ray.color);
 }

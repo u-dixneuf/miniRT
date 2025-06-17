@@ -166,6 +166,15 @@ typedef struct s_minirt
 	t_mlx			mlx;
 }	t_minirt;
 
+typedef struct s_ray
+{
+	double			pos[3];
+	double			vector[3];
+	double			c_pos[3];
+	uint32_t		c_distance;
+	bool			inside_obj;
+	int				color;
+}	t_ray;
 
 /* tools */
 // stools
@@ -224,6 +233,10 @@ t_return	extract_cylinder(t_minirt *mrt, char **info);
 /* viewer */
 t_return	mrt_viewer(t_minirt *mrt);
 
-int			mrt_trace(t_minirt *mrt, int h, int w);
+void		get_vector(t_camera camera, t_ray *ray);
+void		check_sphere(uint32_t n, t_sphere *sphere);
+void		check_plane(uint32_t n, t_plane *plane);
+void		check_cylinder(uint32_t n, t_cylinder *cylinder);
+void		get_color(t_ray *ray, t_ambient ambient, t_light light);
 
 #endif
