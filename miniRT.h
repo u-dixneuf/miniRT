@@ -156,6 +156,7 @@ typedef struct s_minirt
 	t_ambient		ambient;
 	t_camera		camera;
 	t_light			light;
+
 	uint32_t		n_sphere;
 	t_sphere		*sphere;
 	uint32_t		n_plane;
@@ -170,6 +171,7 @@ typedef struct s_ray
 {
 	double			pos[3];
 	double			vector[3];
+
 	double			c_pos[3];
 	uint32_t		c_distance;
 	bool			inside_obj;

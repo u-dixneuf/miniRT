@@ -1,6 +1,6 @@
 #include "../../miniRT.h"
 
-static int	mrt_trace(t_minirt *mrt, int h, int w);
+static int	trace_ray(t_minirt *mrt, int h, int w);
 
 t_return	mrt_viewer(t_minirt *mrt)
 {
@@ -21,7 +21,7 @@ t_return	mrt_viewer(t_minirt *mrt)
 		while (w < WIDTH)
 		{
 			p_addr = (int *)(m->img_addr + h * m->sl + w * (m->bpx / 8));
-			*p_addr = mlx_get_color_value(m->mlx_ptr, mrt_trace(mrt, h, w));
+			*p_addr = mlx_get_color_value(m->mlx_ptr, trace_ray(mrt, h, w));
 			w += 1;
 		}
 		h += 1;
@@ -30,7 +30,7 @@ t_return	mrt_viewer(t_minirt *mrt)
 	return (R_SUCCESS);
 }
 
-static int	mrt_trace(t_minirt *mrt, int h, int w)
+static int	trace_ray(t_minirt *mrt, int h, int w)
 {
 	t_ray	ray;
 
