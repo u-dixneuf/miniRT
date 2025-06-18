@@ -177,8 +177,10 @@ typedef struct s_ray
 	double			vector[3];
 
 	double			c_pos[3];
+	uint32_t		c_color[3];
 	uint32_t		c_distance;
 	bool			inside_obj;
+
 	int				color;
 }	t_ray;
 
@@ -239,12 +241,13 @@ t_return	extract_cylinder(t_minirt *mrt, char **info);
 /* viewer */
 t_return	mrt_viewer(t_minirt *mrt);
 
-void		get_first_vector(t_camera camera, t_ray *ray);
 void		set_vector(double vector[3], double x, double y, double z);
+void		normalize_vector(double vector[3]);
+void		get_first_vector(t_camera camera, t_ray *ray);
+// void		get_second_vector(t_light light, ?);
 void		check_sphere(uint32_t n, t_sphere *sphere);
 void		check_plane(uint32_t n, t_plane *plane);
 void		check_cylinder(uint32_t n, t_cylinder *cylinder);
 void		get_color(t_ray *ray, t_ambient ambient, t_light light);
-// void		get_second_vector(t_light light, ?);
 
 #endif

@@ -1,5 +1,25 @@
 #include "../../miniRT.h"
 
+void	set_vector(double vector[3], double x, double y, double z)
+{
+	vector[0] = x;
+	vector[1] = y;
+	vector[2] = z;
+}
+
+void	normalize_vector(double vector[3])
+{
+	double	norme;
+
+	norme = vector[0] * vector[0];
+	norme += vector[1] * vector[1];
+	norme += vector[2] * vector[2];
+	norme = sqrt(norme);
+	vector[0] = vector[0] / norme;
+	vector[1] = vector[1] / norme;
+	vector[2] = vector[2] / norme;
+}
+
 void	get_first_vector(t_camera camera, t_ray *ray)
 {
 	// calculate ray vector in standard coordinates
@@ -20,11 +40,7 @@ void	get_first_vector(t_camera camera, t_ray *ray)
 		ray->vector[i] += h_factor * pixel_size * camera.h_vector[i];
 		i += 1;
 	}
+	normalize_vector(ray->vector);
 }
 
-void	set_vector(double vector[3], double x, double y, double z)
-{
-	vector[0] = x;
-	vector[1] = y;
-	vector[2] = z;
-}
+// void		get_second_vector(t_light light, ?);

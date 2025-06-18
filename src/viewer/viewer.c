@@ -32,30 +32,33 @@ t_return	mrt_viewer(t_minirt *mrt)
 	return (R_SUCCESS);
 }
 
-static void	get_camera_vectors(t_camera *camera)
+static void	get_camera_vectors(t_camera *camera) // norm!!! ++ check if formulas are ok ++ didnt handle teta
 {
 	double	*T;
 	double	*W;
 	double	*H;
+	double	f;
 
 	T = camera->vector;
 	W = camera->w_vector;
 	H = camera->h_vector;
 	if (fabs(T[0]) <= fabs(T[1]) && fabs(T[0]) <= fabs(T[2]))
 	{
-		
+		f = sqrt(T[1] * T[1] + T[2] * T[2]);
+		set_vector(W, 0, T[2] / f, -T[1] / f);
+		set_vector(H, (T[1] * T[1] + T[2] * T[2]) / f, -T[0] * T[1] / f, -T[0] * T[2] / f);
 	}
 	else if (fabs(T[1]) <= fabs(T[0]) && fabs(T[1]) <= fabs(T[2]))
 	{
-
-
-
+		f = sqrt(T[0] * T[0] + T[2] * T[2]);
+		set_vector(W, -T[2] / f, 0, T[0] / f);
+		set_vector(H, (-T[0] * T[1]) / f, (T[0] * T[0] + T[2] * T[2]) / f, -T[1] * T[2] / f);
 	}
 	else if (fabs(T[2]) <= fabs(T[0]) && fabs(T[2]) <= fabs(T[1]))
 	{
-
-
-
+		f = sqrt(T[0] * T[0] + T[1] * T[1]);
+		set_vector(W, T[1] / f, -T[0] / f, 0);
+		set_vector(H, -T[0] * T[2] / f, -T[1] * T[2] / f, (T[0] * T[0] + T[1] * T[1]) / f);
 	}
 }
 
