@@ -64,8 +64,7 @@
 
 # define DBLCAPID	"[ii] Elements which are defined by a capital letter can only be declared once in the scene.\n"
 
-# define WIDTH	200
-# define HEIGHT	200
+# define SIZE	201
 
 typedef enum e_return
 {
@@ -103,6 +102,9 @@ typedef struct s_camera
 	double			pos[3];
 	double			vector[3];
 	uint32_t		fov;
+
+	double			w_vector[3];
+	double			h_vector[3];
 }	t_camera;
 
 typedef struct s_light
@@ -169,6 +171,8 @@ typedef struct s_minirt
 
 typedef struct s_ray
 {
+	int				h;
+	int				w;
 	double			pos[3];
 	double			vector[3];
 
@@ -235,10 +239,12 @@ t_return	extract_cylinder(t_minirt *mrt, char **info);
 /* viewer */
 t_return	mrt_viewer(t_minirt *mrt);
 
-void		get_vector(t_camera camera, t_ray *ray);
+void		get_first_vector(t_camera camera, t_ray *ray);
+void		set_vector(double vector[3], double x, double y, double z);
 void		check_sphere(uint32_t n, t_sphere *sphere);
 void		check_plane(uint32_t n, t_plane *plane);
 void		check_cylinder(uint32_t n, t_cylinder *cylinder);
 void		get_color(t_ray *ray, t_ambient ambient, t_light light);
+// void		get_second_vector(t_light light, ?);
 
 #endif
