@@ -89,6 +89,13 @@ typedef enum e_id
 	ID_INVALID
 }	t_id;
 
+typedef enum e_type
+{
+	PLANE,
+	SPHERE,
+	CYLINDER
+}
+
 typedef struct s_ambient
 {
 	bool			is_set;
@@ -140,6 +147,22 @@ typedef struct s_cylinder
 	uint32_t			color[3];
 }	t_cylinder;
 
+typedef struct s_ray
+{
+	int				h;
+	int				w;
+	double			pos[3];
+	double			vector[3];
+
+	double			c_pos[3];
+	int32_t			c_color[3];
+	double			c_distance;
+	bool			inside_obj;
+	int				obj_type;
+
+	int				color;
+}	t_ray;
+
 typedef struct s_mlx
 {
 	void			*mlx_ptr;
@@ -168,21 +191,6 @@ typedef struct s_minirt
 
 	t_mlx			mlx;
 }	t_minirt;
-
-typedef struct s_ray
-{
-	int				h;
-	int				w;
-	double			pos[3];
-	double			vector[3];
-
-	double			c_pos[3];
-	uint32_t		c_color[3];
-	uint32_t		c_distance;
-	bool			inside_obj;
-
-	int				color;
-}	t_ray;
 
 /* tools */
 // stools
@@ -241,13 +249,17 @@ t_return	extract_cylinder(t_minirt *mrt, char **info);
 /* viewer */
 t_return	mrt_viewer(t_minirt *mrt);
 
+double		vector_norme(double vector[3]);
 void		set_vector(double vector[3], double x, double y, double z);
 void		normalize_vector(double vector[3]);
+double		scalar_product(double vec_a[3], double vec_b[3]);
+double		calc_distance(double vec_a[3], double vec_b[3]);
+
 void		get_first_vector(t_camera camera, t_ray *ray);
 // void		get_second_vector(t_light light, ?);
-void		check_sphere(uint32_t n, t_sphere *sphere);
-void		check_plane(uint32_t n, t_plane *plane);
-void		check_cylinder(uint32_t n, t_cylinder *cylinder);
+void		check_sphere(t_ray *ray, uint32_t n, t_sphere *sphere);
+void		check_plane(t_ray *ray, uint32_t n, t_plane *plane);
+void		check_cylinder(t_ray *ray, uint32_t n, t_cylinder *cylinder);
 void		get_color(t_ray *ray, t_ambient ambient, t_light light);
 
 #endif

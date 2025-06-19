@@ -70,10 +70,10 @@ static int	trace_ray(t_minirt *mrt, int h, int w)
 	ray.h = h;
 	ray.w = w;
 	get_first_vector(mrt->camera, &ray);
-	check_plane(mrt->n_plane, mrt->plane);
-	check_sphere(mrt->n_sphere, mrt->sphere);
+	check_plane(&ray, mrt->n_plane, mrt->plane);
+	check_sphere(&ray, mrt->n_sphere, mrt->sphere);
 	if (!ray.inside_obj)
-		check_cylinder(mrt->n_cylinder, mrt->cylinder);
+		check_cylinder(&ray, mrt->n_cylinder, mrt->cylinder);
 	get_color(&ray, mrt->ambient, mrt->light);
 	return (ray.color);
 }
