@@ -94,7 +94,7 @@ typedef enum e_type
 	PLANE,
 	SPHERE,
 	CYLINDER
-}
+};
 
 typedef struct s_ambient
 {
