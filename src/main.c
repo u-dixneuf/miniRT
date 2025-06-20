@@ -14,9 +14,11 @@ int	main(int ac, char **av)
 	ret = mrt_initmlx(&mrt.mlx);
 	if (ret)
 		return (mrt_free_all(&mrt), ret);
-	printf("hello\n");
 	ret = mrt_viewer(&mrt);
 	if (ret)
 		return (mrt_free_all(&mrt), ret);
+	/* debug */
+	mlx_loop(mrt.mlx.mlx_ptr);
+	/* debug */
 	return (mrt_free_all(&mrt), R_SUCCESS);
 }

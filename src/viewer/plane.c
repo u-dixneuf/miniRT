@@ -3,16 +3,12 @@
 static void	plane_contact(t_ray *ray, t_plane *plane);
 static void	contact_data(double d,t_ray *ray, t_plane *plane);
 
-void	check_plane(t_ray *ray, uint32_t n, t_plane *plane)
+void	check_plane(t_ray *ray, t_plane *plane)
 {
-	uint32_t	p;
-
-	p = 0;
-	while (p < n)
+	while (plane)
 	{
 		plane_contact(ray, plane);
 		plane = plane->next;
-		p += 1;
 	}
 }
 
@@ -34,6 +30,7 @@ static void	plane_contact(t_ray *ray, t_plane *plane)
 	v[1] = n[1] - plane->pos[1];
 	v[2] = n[2] - plane->pos[2];
 	dn = fabs(scalar_product(plane->vector, v));
+	printf("dm=%lf dn=%lf\n", dm, dn);
 	if (dn < dm)
 		contact_data(dm, ray, plane);
 }
@@ -43,7 +40,7 @@ static void	contact_data(double d, t_ray *ray, t_plane *plane)
 	double	contact_d;
 
 	contact_d = d / fabs(scalar_product(plane->vector, ray->vector));
-	if (contact_d < ray->c_distance)
+	if (contact_d <= ray->c_distance || ray->c_distance == 0)
 	{
 		ray->c_pos[0] = ray->pos[0] + contact_d * ray->vector[0];
 		ray->c_pos[1] = ray->pos[1] + contact_d * ray->vector[1];

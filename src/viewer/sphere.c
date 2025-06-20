@@ -3,17 +3,13 @@
 static void	sphere_contact(t_ray *ray, t_sphere *sphere);
 static void	contact_data(double d, t_ray *ray, t_sphere *sphere);
 
-void	check_sphere(t_ray *ray, uint32_t n, t_sphere *sphere)
+void	check_sphere(t_ray *ray, t_sphere *sphere)
 {
-	uint32_t	s;
-
-	s = 0;
-	while (s < n)
+	while (sphere)
 	{
 		if (!ray->inside_obj)
 			sphere_contact(ray, sphere);
 		sphere = sphere->next;
-		s += 1;
 	}
 }
 

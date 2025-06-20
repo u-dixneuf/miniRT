@@ -257,9 +257,9 @@ double		calc_distance(double pos_a[3], double pos_b[3]);
 
 void		get_first_vector(t_camera camera, t_ray *ray);
 // void		get_second_vector(t_light light, ?);
-void		check_sphere(t_ray *ray, uint32_t n, t_sphere *sphere);
-void		check_plane(t_ray *ray, uint32_t n, t_plane *plane);
-void		check_cylinder(t_ray *ray, uint32_t n, t_cylinder *cylinder);
-void		get_color(t_ray *ray, t_ambient ambient, t_light light);
+void		check_sphere(t_ray *ray, t_sphere *sphere);
+void		check_plane(t_ray *ray, t_plane *plane);
+void		check_cylinder(t_ray *ray, t_cylinder *cylinder);
+void		get_color(t_ray *ray, t_minirt *mrt);
 
 #endif
