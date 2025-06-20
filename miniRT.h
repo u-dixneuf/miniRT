@@ -10,8 +10,8 @@
 # include <errno.h>
 #include <stdint.h>
 # include <math.h>
-// # include "src/libmlx/mlx.h"
-// # include "src/libmlx/mlx_int.h"
+# include "src/libmlx/mlx.h"
+# include "src/libmlx/mlx_int.h"
 
 # define ARGS_NUM	"[!!] Incorrect number of args!\n"
 
@@ -94,7 +94,7 @@ typedef enum e_type
 	PLANE = 1,
 	SPHERE,
 	CYLINDER
-};
+}	t_type;
 
 typedef struct s_ambient
 {

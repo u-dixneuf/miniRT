@@ -10,7 +10,8 @@ void	check_sphere(t_ray *ray, uint32_t n, t_sphere *sphere)
 	s = 0;
 	while (s < n)
 	{
-		sphere_contact(ray, sphere);
+		if (!ray->inside_obj)
+			sphere_contact(ray, sphere);
 		sphere = sphere->next;
 		s += 1;
 	}

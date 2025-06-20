@@ -6,4 +6,5 @@ void	get_color(t_ray *ray, t_ambient ambient, t_light light)
 	// use same check* functions to check for contact with an object
 	// determine if contact point is shadowed or lightened
 	// deduce color from distance from light source
+	ray->color = 0xffffff;
 }
