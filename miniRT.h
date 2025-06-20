@@ -246,8 +246,8 @@ t_return	extract_sphere(t_minirt *mrt, char **info);
 t_return	extract_plane(t_minirt *mrt, char **info);
 t_return	extract_cylinder(t_minirt *mrt, char **info);
 
-/* viewer */
-t_return	mrt_viewer(t_minirt *mrt);
+/* tracer */
+t_return	mrt_tracer(t_minirt *mrt);
 
 double		vector_norme(double vector[3]);
 void		set_vector(double vector[3], double x, double y, double z);
