@@ -91,7 +91,7 @@ typedef enum e_id
 
 typedef enum e_type
 {
-	PLANE,
+	PLANE = 1,
 	SPHERE,
 	CYLINDER
 };
@@ -253,7 +253,7 @@ double		vector_norme(double vector[3]);
 void		set_vector(double vector[3], double x, double y, double z);
 void		normalize_vector(double vector[3]);
 double		scalar_product(double vec_a[3], double vec_b[3]);
-double		calc_distance(double vec_a[3], double vec_b[3]);
+double		calc_distance(double pos_a[3], double pos_b[3]);
 
 void		get_first_vector(t_camera camera, t_ray *ray);
 // void		get_second_vector(t_light light, ?);

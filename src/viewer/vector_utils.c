@@ -37,13 +37,13 @@ double	scalar_product(double vec_a[3], double vec_b[3])
 	return (product);
 }
 
-double	calc_distance(double vec_a[3], double vec_b[3])
+double	calc_distance(double pos_a[3], double pos_b[3])
 {
 	double	vector[3];
 	double	norme;
 	
-	vector[0] = vec_a[0] - vec_b[0];
-	vector[1] = vec_a[1] - vec_b[1];
-	vector[2] = vec_a[2] - vec_b[2];
+	vector[0] = pos_a[0] - pos_b[0];
+	vector[1] = pos_a[1] - pos_b[1];
+	vector[2] = pos_a[2] - pos_b[2];
 	return (vector_norme(vector));
 }
