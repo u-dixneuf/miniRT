@@ -21,6 +21,7 @@ void	get_first_vector(t_camera camera, t_ray *ray)
 		i += 1;
 	}
 	normalize_vector(ray->vector);
+	printf("ray[%d][%d], vector [%lf][%lf][%lf]\n", ray->h, ray->w, ray->vector[0], ray->vector[1], ray->vector[2]);
 }
 
 // void		get_second_vector(t_light light, ?);
