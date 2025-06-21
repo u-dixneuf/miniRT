@@ -64,7 +64,7 @@
 
 # define DBLCAPID	"[ii] Elements which are defined by a capital letter can only be declared once in the scene.\n"
 
-# define SIZE	201
+# define SIZE	801
 
 typedef enum e_return
 {
@@ -157,9 +157,9 @@ typedef struct s_ray
 	double			c_pos[3];
 	int32_t			c_color[3];
 	double			c_distance;
-	bool			inside_obj;
 	int				obj_type;
 
+	bool			inside_obj;
 	int				color;
 }	t_ray;
 

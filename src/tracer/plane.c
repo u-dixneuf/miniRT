@@ -30,7 +30,6 @@ static void	plane_contact(t_ray *ray, t_plane *plane)
 	v[1] = n[1] - plane->pos[1];
 	v[2] = n[2] - plane->pos[2];
 	dn = fabs(scalar_product(plane->vector, v));
-	printf("dm=%lf dn=%lf\n", dm, dn);
 	if (dn < dm)
 		contact_data(dm, ray, plane);
 }

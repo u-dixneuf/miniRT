@@ -1,3 +1,9 @@
+# parser needs to check if vectors are normalized !
+#
+#
+#
+#
+
 CC = cc #-Wall -Wextra -Werror
 
 NAME = miniRT

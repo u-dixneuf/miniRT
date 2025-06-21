@@ -2,14 +2,16 @@
 
 void	get_color(t_ray *ray, t_minirt *mrt)
 {
-	// t_ray	b_ray;
+	t_ray	b_ray;
 
-	// if (ray->obj_type == 0 || ray->inside_obj)
-	// {	
-	// 	ray->color = 0;
-	// 	return ;
-	// }
-	// mrt_memset(&b_ray, 0, sizeof(t_ray));
+	if (ray->obj_type == 0 || ray->inside_obj)
+	{	
+		ray->color = 0;
+		return ;
+	}
+	else
+		ray->color = ray->c_color[0] * 0x010000 + ray->c_color[1] * 0x0100 + ray->c_color[2] * 0x01;
+	mrt_memset(&b_ray, 0, sizeof(t_ray));
 	// b_ray.pos[0] = ray->c_pos[0];
 	// b_ray.pos[1] = ray->c_pos[1];
 	// b_ray.pos[2] = ray->c_pos[3];
@@ -25,6 +27,8 @@ void	get_color(t_ray *ray, t_minirt *mrt)
 	// 		+ mrt->ambient.color[2] * 0x01;
 	// else
 	// 	ray->color = 0;
-	printf("ray [%d][%d]; object %d, distance %lf, inside %d\n",
-		ray->w, ray->h, ray->obj_type, ray->c_distance, ray->inside_obj);
+	/* debug */
+	// printf("ray [%d][%d], inside %d, contact %d, distance %lf\n", ray->w, ray->h,
+	// 		ray->inside_obj, ray->obj_type, ray->c_distance);
+	/* debug */
 }
