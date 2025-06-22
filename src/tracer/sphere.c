@@ -25,7 +25,7 @@ static void	sphere_contact(t_ray *ray, t_sphere *sphere)
 	vec_mc[2] = sphere->pos[2] - ray->pos[2];
 	delta = 4 * pow(scalar_product(ray->vector, vec_mc), 2);
 	delta -= 4 * (scalar_product(vec_mc, vec_mc) - pow(sphere->diameter / 2, 2));
-	if (delta > 0) // think about case delta == 0
+	if (delta >= 0)
 	{
 		t1 = (2 * scalar_product(ray->vector, vec_mc) - sqrt(delta)) / 2;
 		t2 = (2 * scalar_product(ray->vector, vec_mc) + sqrt(delta)) / 2;

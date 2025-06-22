@@ -11,7 +11,7 @@ void	get_color(t_ray *ray, t_minirt *mrt)
 	}
 	else
 		ray->color = ray->c_color[0] * 0x010000 + ray->c_color[1] * 0x0100 + ray->c_color[2] * 0x01;
-	mrt_memset(&b_ray, 0, sizeof(t_ray));
+	// mrt_memset(&b_ray, 0, sizeof(t_ray));
 	// b_ray.pos[0] = ray->c_pos[0];
 	// b_ray.pos[1] = ray->c_pos[1];
 	// b_ray.pos[2] = ray->c_pos[3];
