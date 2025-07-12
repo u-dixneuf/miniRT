@@ -6,9 +6,11 @@ void	get_first_vector(t_camera camera, t_ray *ray)
 	double	pixel_size;
 	double	w_factor;
 	double	h_factor;
+	double	fov_rad;
 	uint8_t	i;
 
-	pixel_size = 2 * tan((double)camera.fov / 2) / SIZE;
+	fov_rad = (camera.fov * acos(-1)) / 180;
+	pixel_size = 2 * tan(fov_rad / 2) / SIZE;
 	w_factor = ray->w - (SIZE / 2);
 	h_factor = ray->h - (SIZE / 2);
 	i = 0;
