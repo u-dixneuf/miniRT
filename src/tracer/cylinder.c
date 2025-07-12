@@ -27,13 +27,16 @@ static void	cylinder_contact(t_ray *ray, t_cylinder *cyl)
 	double	linear_distance;
 
 	linear_distance = fabs(scalar_product(vec_mc, cyl->vector));
-	lateral_distance = pow(vector_norme(vec_mc), 2) - pow(linear_distance, 2);
+	lateral_distance = scalar_product(vec_mc, vec_mc) - pow(linear_distance, 2);
 	lateral_distance = sqrt(lateral_distance);
 	if (linear_distance <= cyl->height / 2
 		&& lateral_distance <= cyl->diameter / 2)
 		ray->inside_obj = true;
 	else
 	{
+		double	lateral_cdis;
+		double	linear_cdis;
+
 		
 	}
 }
