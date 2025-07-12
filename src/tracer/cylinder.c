@@ -12,6 +12,53 @@ void	check_cylinder(t_ray *ray, t_cylinder *cylinder)
 	}
 }
 
+static bool	quadratic(double p[3])
+{
+	double	delta;
+	double	t[2];
+
+	delta = pow(p[1], 2) - 4 * p[0] * p[2];
+	if (delta >= 0)
+	{
+		t[0] = (-p[1] - sqrt(delta)) / (2 * p[0]);
+		t[1] = (-p[1] + sqrt(delta)) / (2 * p[0]);
+		if (t[0] <= t[1])
+		{
+			p[0] = t[0];
+			p[1] = t[1];
+		}
+		else
+		{
+			p[0] = t[1];
+			p[1] = t[0];
+		}
+		return (true);
+	}
+	return (false);
+}
+
+static double	get_lateral(t_ray *ray, t_cylinder *cyl, double	vec_mc[3])
+{
+	double	a;
+	double	b;
+	double	p[3]; // p[0].t^2 + p[1].t + p[2] = 0
+
+	a = scalar_product(ray->vector, cyl->vector);
+	b = scalar_product(vec_mc, cyl->vector);
+	p[0] = pow(a * b, 2) - 2 * pow(a, 2) + 1;
+	p[1] = -2 * (a * b + scalar_product(vec_mc, ray->vector));
+	p[2] = scalar_product(vec_mc, vec_mc) - 2 * pow(b, 2) - pow(cyl->diameter / 2, 2);
+	if (quadratic(p))
+	{
+
+	}
+}
+
+static double 	get_linear(t_ray *ray, t_cylinder *cyl, double	vec_mc[3])
+{
+
+}
+
 static void	cylinder_contact(t_ray *ray, t_cylinder *cyl)
 {
 	double	vec_mc[3];
@@ -37,6 +84,8 @@ static void	cylinder_contact(t_ray *ray, t_cylinder *cyl)
 		double	lateral_cdis;
 		double	linear_cdis;
 
-		
+		lateral_cdis = get_lateral(ray, cyl, vec_mc);
+		linear_cdis = get_linear(ray, cyl, vec_mc);
+		// compare them and conclude
 	}
 }
