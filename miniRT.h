@@ -235,6 +235,9 @@ t_return	mrt_init(t_minirt *mrt);
 t_return	mrt_initmlx(t_mlx *mlx);
 void		mrt_freemlx(t_mlx mlx);
 
+// math
+bool		quadratic(double p[3]);
+
 /* parser */
 t_return	mrt_parser(const char *filename, t_minirt *mrt);
 

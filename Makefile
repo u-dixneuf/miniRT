@@ -20,6 +20,7 @@ SRC = 	src/main.c \
 		src/tools/memutils_1.c \
 		src/tools/links.c \
 		src/tools/futils.c \
+		src/tools/mathutils.c \
 		src/parser/parser.c \
 		src/parser/extract.c \
 		src/parser/extract_utils.c \
@@ -30,6 +31,7 @@ SRC = 	src/main.c \
 		src/tracer/plane.c \
 		src/tracer/sphere.c \
 		src/tracer/cylinder.c \
+		src/tracer/cylinder_utils.c \
 		src/tracer/color.c
 
 OBJ = $(SRC:.c=.o)
