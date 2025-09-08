@@ -1,6 +1,6 @@
 #include "../../miniRT.h"
 
-void	get_first_vector(t_camera camera, t_ray *ray)
+void	get_ctg_vector(t_camera camera, t_ray *ray) /// fish-eye motherfucker
 {
 	double	pixel_size;
 	double	w_factor;
@@ -8,11 +8,10 @@ void	get_first_vector(t_camera camera, t_ray *ray)
 	double	fov_rad;
 	uint8_t	i;
 
-	fov_rad = (camera.fov * acos(-1)) / (180 * 2);
-	pixel_size = 2 * tan(fov_rad) / SIZE;
-	fov_rad = fov_rad / SIZE; // angle to add in each pixel from center
-	w_factor = (ray->w - (SIZE / 2)); // last factor is to fix the fish-eye effect  * (1 + cos(fov_rad * fabs(ray->w - (SIZE / 2))))
-	h_factor = (ray->h - (SIZE / 2)); // turns out it just widens the fov like a real eye
+	fov_rad = (camera.fov * acos(-1)) / 180;
+	pixel_size = 2 * tan(fov_rad / 2) / SIZE;
+	w_factor = (ray->w - (SIZE / 2));
+	h_factor = (ray->h - (SIZE / 2));
 	i = 0;
 	while (i < 3)
 	{
@@ -23,6 +22,7 @@ void	get_first_vector(t_camera camera, t_ray *ray)
 		i += 1;
 	}
 	normalize_vector(ray->vector);
+	printf("ray [h:%d][w:%d], ctg vector [%d][%d][%d]\n", ray->h, ray->w, ray->vector[0], ray->vector[1], ray->vector[2]);
 }
 
 // void		get_second_vector(t_light light, ?);

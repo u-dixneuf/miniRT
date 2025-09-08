@@ -69,7 +69,7 @@ static int	trace_ray(t_minirt *mrt, int h, int w)
 	mrt_memset(&ray, 0, sizeof(t_ray));
 	ray.h = h;
 	ray.w = w;
-	get_first_vector(mrt->camera, &ray);
+	get_ctg_vector(mrt->camera, &ray); // get vector going from camera to ray pixel
 	check_plane(&ray, mrt->plane);
 	check_sphere(&ray, mrt->sphere);
 	check_cylinder(&ray, mrt->cylinder);

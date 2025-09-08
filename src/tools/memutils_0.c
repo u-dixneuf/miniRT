@@ -33,6 +33,6 @@ t_return	mrt_init(t_minirt *mrt)
 //		return (R_MALLOC);
 
 // brooh??
-mrt_memset(mrt, 0, sizeof(t_minirt)); // i guess it's enough
-return (R_SUCCESS);
+	mrt_memset(mrt, 0, sizeof(t_minirt)); // i guess it's enough
+	return (R_SUCCESS);
 }
