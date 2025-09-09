@@ -64,7 +64,11 @@
 
 # define DBLCAPID	"[ii] Elements which are defined by a capital letter can only be declared once in the scene.\n"
 
-# define SIZE	601
+# define SIZE		601
+# define RED		0x010000
+# define GREEN		0x000100
+# define BLUE		0x000001
+# define EPSILON	0.0001 // need to search why comparing floats isnt precise
 
 typedef enum e_return
 {

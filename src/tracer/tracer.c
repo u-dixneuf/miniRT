@@ -49,4 +49,3 @@ static int	trace_ray(t_minirt *mrt, int h, int w)
 	}
 	return (0);
 }
- 
