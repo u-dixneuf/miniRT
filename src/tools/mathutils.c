@@ -10,7 +10,7 @@ bool	quadratic(double p[3])
 	{
 		t[0] = (-p[1] - sqrt(delta)) / (2 * p[0]);
 		t[1] = (-p[1] + sqrt(delta)) / (2 * p[0]);
-		if (fabs(t[0]) <= fabs(t[1]))
+		if (t[0] <= t[1])
 		{
 			p[0] = t[0];
 			p[1] = t[1];
@@ -20,7 +20,7 @@ bool	quadratic(double p[3])
 			p[0] = t[1];
 			p[1] = t[0];
 		}
-		return (true);
+		return (true); // p[0] <= p[1] always
 	}
 	return (false);
 }
