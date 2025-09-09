@@ -14,7 +14,6 @@ int	main(int ac, char **av)
 	ret = mrt_initmlx(&mrt.mlx);
 	if (ret)
 		return (mrt_free_all(&mrt), ret);
-	write(1, "kaka\n", 5);
 	ret = mrt_tracer(&mrt);
 	if (ret)
 		return (mrt_free_all(&mrt), ret);

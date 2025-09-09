@@ -1,6 +1,5 @@
 #include "../../miniRT.h"
 
-static void	get_camera_vectors(t_camera *camera);
 static int	trace_ray(t_minirt *mrt, int h, int w);
 
 t_return	mrt_tracer(t_minirt *mrt)
@@ -32,47 +31,17 @@ t_return	mrt_tracer(t_minirt *mrt)
 	return (R_SUCCESS);
 }
 
-static void	get_camera_vectors(t_camera *camera) // norm!!! ++ check if formulas are ok ++ didnt handle teta
-{
-	double	*T;
-	double	*W;
-	double	*H;
-	double	f;
-
-	T = camera->vector;
-	W = camera->w_vector;
-	H = camera->h_vector;
-	if (fabs(T[0]) <= fabs(T[1]) && fabs(T[0]) <= fabs(T[2]))
-	{
-		f = sqrt(T[1] * T[1] + T[2] * T[2]);
-		set_vector(W, 0, T[2] / f, -T[1] / f);
-		set_vector(H, (T[1] * T[1] + T[2] * T[2]) / f, -T[0] * T[1] / f, -T[0] * T[2] / f);
-	}
-	else if (fabs(T[1]) <= fabs(T[0]) && fabs(T[1]) <= fabs(T[2]))
-	{
-		f = sqrt(T[0] * T[0] + T[2] * T[2]);
-		set_vector(W, -T[2] / f, 0, T[0] / f);
-		set_vector(H, (-T[0] * T[1]) / f, (T[0] * T[0] + T[2] * T[2]) / f, -T[1] * T[2] / f);
-	}
-	else if (fabs(T[2]) <= fabs(T[0]) && fabs(T[2]) <= fabs(T[1]))
-	{
-		f = sqrt(T[0] * T[0] + T[1] * T[1]);
-		set_vector(W, T[1] / f, -T[0] / f, 0);
-		set_vector(H, -T[0] * T[2] / f, -T[1] * T[2] / f, (T[0] * T[0] + T[1] * T[1]) / f);
-	}
-}
-
 static int	trace_ray(t_minirt *mrt, int h, int w)
 {
-	t_ray	ray;
+	t_ray	camera_ray;
+	t_ray	light_ray;
 
-	mrt_memset(&ray, 0, sizeof(t_ray));
-	ray.h = h;
-	ray.w = w;
-	get_ctg_vector(mrt->camera, &ray); // get vector going from camera to ray pixel
-	check_plane(&ray, mrt->plane);
-	check_sphere(&ray, mrt->sphere);
-	check_cylinder(&ray, mrt->cylinder);
-	get_color(&ray, mrt);
-	return (ray.color);
+	mrt_memset(&camera_ray, 0, sizeof(t_ray));
+	camera_ray.h = h;
+	camera_ray.w = w;
+	get_cameragrid_vector(mrt->camera, &camera_ray); // get vector going from camera to ray pixel
+	get_closest_contact(mrt, &camera_ray);
+	get_lightcontact_vector(mrt->light, &light_ray);
+	get_closest_contact(mrt, &light_ray);
+	return (get_color(&camera_ray, &light_ray));
 }

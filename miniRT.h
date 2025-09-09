@@ -154,13 +154,10 @@ typedef struct s_ray
 	double			pos[3];
 	double			vector[3];
 
-	double			c_pos[3];
-	int32_t			c_color[3];
-	double			c_distance;
+	double			c_pos[3]; // contact pos
+	double			c_distance; // contact distance
 	int				obj_type;
-
-	bool			inside_obj;
-	int				color;
+	void			*obj_ptr;
 }	t_ray;
 
 typedef struct s_mlx
@@ -258,11 +255,13 @@ void		normalize_vector(double vector[3]);
 double		scalar_product(double vec_a[3], double vec_b[3]);
 double		calc_distance(double pos_a[3], double pos_b[3]);
 
-void		get_ctg_vector(t_camera camera, t_ray *ray);
-// void		get_otl_vector(t_light light, t_ray *ray);
+void		get_camera_vectors(t_camera *camera);
+void		get_cameragrid_vector(t_camera camera, t_ray *ray);
+void		get_lightcontact_vector(t_light light, t_ray *ray);
+void		get_closest_contact(t_minirt *mrt, t_ray *ray);
 void		check_sphere(t_ray *ray, t_sphere *sphere);
 void		check_plane(t_ray *ray, t_plane *plane);
 void		check_cylinder(t_ray *ray, t_cylinder *cylinder);
-void		get_color(t_ray *ray, t_minirt *mrt);
+int			get_color(t_ray *cray, t_ray *lray);
 
 #endif

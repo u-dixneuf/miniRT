@@ -1,6 +1,36 @@
 #include "../../miniRT.h"
 
-void	get_ctg_vector(t_camera camera, t_ray *ray) /// fish-eye motherfucker
+void	get_camera_vectors(t_camera *camera)
+{
+	double	*T;
+	double	*W;
+	double	*H;
+	double	f;
+
+	T = camera->vector;
+	W = camera->w_vector;
+	H = camera->h_vector;
+	if (fabs(T[0]) <= fabs(T[1]) && fabs(T[0]) <= fabs(T[2]))
+	{
+		f = sqrt(T[1] * T[1] + T[2] * T[2]);
+		set_vector(W, 0, T[2] / f, -T[1] / f);
+		set_vector(H, (T[1] * T[1] + T[2] * T[2]) / f, -T[0] * T[1] / f, -T[0] * T[2] / f);
+	}
+	else if (fabs(T[1]) <= fabs(T[0]) && fabs(T[1]) <= fabs(T[2]))
+	{
+		f = sqrt(T[0] * T[0] + T[2] * T[2]);
+		set_vector(W, -T[2] / f, 0, T[0] / f);
+		set_vector(H, (-T[0] * T[1]) / f, (T[0] * T[0] + T[2] * T[2]) / f, -T[1] * T[2] / f);
+	}
+	else if (fabs(T[2]) <= fabs(T[0]) && fabs(T[2]) <= fabs(T[1]))
+	{
+		f = sqrt(T[0] * T[0] + T[1] * T[1]);
+		set_vector(W, T[1] / f, -T[0] / f, 0);
+		set_vector(H, -T[0] * T[2] / f, -T[1] * T[2] / f, (T[0] * T[0] + T[1] * T[1]) / f);
+	}
+}
+
+void	get_cameragrid_vector(t_camera camera, t_ray *ray) /// fish-eye motherfucker
 {
 	double	pixel_size;
 	double	w_factor;
@@ -22,7 +52,10 @@ void	get_ctg_vector(t_camera camera, t_ray *ray) /// fish-eye motherfucker
 		i += 1;
 	}
 	normalize_vector(ray->vector);
-	printf("ray [h:%d][w:%d], ctg vector [%d][%d][%d]\n", ray->h, ray->w, ray->vector[0], ray->vector[1], ray->vector[2]);
 }
 
-// void		get_second_vector(t_light light, ?);
+void	get_lightcontact_vector(t_light light, t_ray *ray)
+{
+	(void)light;
+	(void)ray;
+}
