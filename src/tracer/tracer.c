@@ -5,7 +5,6 @@ static int	trace_ray(t_minirt *mrt, int h, int w);
 t_return	mrt_tracer(t_minirt *mrt)
 {
 	t_mlx	*m;
-	int		p_color;
 	int		*p_addr;
 	int		h;
 	int		w;

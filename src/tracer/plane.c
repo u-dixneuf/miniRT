@@ -36,15 +36,13 @@ static void	plane_contact(t_ray *ray, t_plane *plane)
 
 static void	contact_data(double d, t_ray *ray, t_plane *plane)
 {
-	double	contact_d;
-
-	contact_d = d / fabs(scalar_product(plane->vector, ray->vector));
-	if (contact_d <= ray->c_distance || ray->c_distance == 0)
+	d = d / fabs(scalar_product(plane->vector, ray->vector));
+	if (d <= ray->c_distance || ray->c_distance == 0)
 	{
-		ray->c_pos[0] = ray->pos[0] + contact_d * ray->vector[0];
-		ray->c_pos[1] = ray->pos[1] + contact_d * ray->vector[1];
-		ray->c_pos[2] = ray->pos[2] + contact_d * ray->vector[2];
-		ray->c_distance = contact_d;
+		ray->c_pos[0] = ray->pos[0] + d * ray->vector[0];
+		ray->c_pos[1] = ray->pos[1] + d * ray->vector[1];
+		ray->c_pos[2] = ray->pos[2] + d * ray->vector[2];
+		ray->c_distance = d;
 		ray->obj_type = PLANE;
 		ray->obj_ptr = (void *)plane;
 	}

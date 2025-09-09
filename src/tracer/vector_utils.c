@@ -40,7 +40,6 @@ double	scalar_product(double vec_a[3], double vec_b[3])
 double	calc_distance(double pos_a[3], double pos_b[3])
 {
 	double	vector[3];
-	double	norme;
 	
 	vector[0] = pos_a[0] - pos_b[0];
 	vector[1] = pos_a[1] - pos_b[1];

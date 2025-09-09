@@ -4,7 +4,7 @@
 #
 # hhh
 
-CC = cc #-Wall -Wextra -Werror
+CC = cc -Wall -Wextra -Werror
 
 NAME = miniRT
 

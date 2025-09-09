@@ -65,6 +65,7 @@ void	get_lightcontact_vector(t_light light, t_ray *cray, t_ray *lray)
 		lray->vector[i] = cray->c_pos[i] - light.pos[i];
 		i += 1;
 	}
+	normalize_vector(lray->vector);
 }
 
 void	get_closest_contact(t_minirt *mrt, t_ray *ray)

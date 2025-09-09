@@ -26,28 +26,28 @@ static void	sphere_contact(t_ray *ray, t_sphere *sphere)
 	delta -= 4 * (scalar_product(vec_mc, vec_mc) - pow(sphere->diameter / 2, 2));
 	if (delta >= 0)
 	{
+		// t1 <= t2
 		t1 = (2 * scalar_product(ray->vector, vec_mc) - sqrt(delta)) / 2;
 		t2 = (2 * scalar_product(ray->vector, vec_mc) + sqrt(delta)) / 2;
-		if (t2 > 0)
-			contact_data(t1, ray, sphere);
+		if (t2 >= 0) // t2 > 0 gives rough edges, need to check
+		{
+			if (t1 >= 0)
+				contact_data(t1, ray, sphere);
+			else
+				contact_data(t2, ray, sphere);
+		}
 	}
 }
 
 static void	contact_data(double d, t_ray *ray, t_sphere *sphere)
 {
-	double	dist_mc;
-
-	if (d <= 0)
-		ray->inside_obj = true;
-	else if (d < ray->c_distance || ray->c_distance == 0)
+	if (d <= ray->c_distance || ray->c_distance == 0)
 	{
 		ray->c_pos[0] = ray->pos[0] + d * ray->vector[0];
 		ray->c_pos[1] = ray->pos[1] + d * ray->vector[1];
 		ray->c_pos[2] = ray->pos[2] + d * ray->vector[2];
-		ray->c_color[0] = sphere->color[0];
-		ray->c_color[1] = sphere->color[1];
-		ray->c_color[2] = sphere->color[2];
 		ray->c_distance = d;
 		ray->obj_type = SPHERE;
+		ray->obj_ptr = (void *)sphere;
 	}
 }

@@ -64,7 +64,7 @@
 
 # define DBLCAPID	"[ii] Elements which are defined by a capital letter can only be declared once in the scene.\n"
 
-# define SIZE	801
+# define SIZE	601
 
 typedef enum e_return
 {
