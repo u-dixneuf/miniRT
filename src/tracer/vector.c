@@ -54,8 +54,22 @@ void	get_cameragrid_vector(t_camera camera, t_ray *ray) /// fish-eye motherfucke
 	normalize_vector(ray->vector);
 }
 
-void	get_lightcontact_vector(t_light light, t_ray *ray)
+void	get_lightcontact_vector(t_light light, t_ray *cray, t_ray *lray)
 {
-	(void)light;
-	(void)ray;
+	uint8_t	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		lray->pos[i] = light.pos[i];
+		lray->vector[i] = cray->c_pos[i] - light.pos[i];
+		i += 1;
+	}
+}
+
+void	get_closest_contact(t_minirt *mrt, t_ray *ray)
+{
+	check_plane(ray, mrt->plane);
+	check_sphere(ray, mrt->sphere);
+	check_cylinder(ray, mrt->cylinder); //TODO
 }

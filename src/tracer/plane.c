@@ -44,10 +44,8 @@ static void	contact_data(double d, t_ray *ray, t_plane *plane)
 		ray->c_pos[0] = ray->pos[0] + contact_d * ray->vector[0];
 		ray->c_pos[1] = ray->pos[1] + contact_d * ray->vector[1];
 		ray->c_pos[2] = ray->pos[2] + contact_d * ray->vector[2];
-		ray->c_color[0] = plane->color[0];
-		ray->c_color[1] = plane->color[1];
-		ray->c_color[2] = plane->color[2];
 		ray->c_distance = contact_d;
 		ray->obj_type = PLANE;
+		ray->obj_ptr = (void *)plane;
 	}
 }

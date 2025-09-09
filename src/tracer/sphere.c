@@ -7,8 +7,7 @@ void	check_sphere(t_ray *ray, t_sphere *sphere)
 {
 	while (sphere)
 	{
-		if (!ray->inside_obj)
-			sphere_contact(ray, sphere);
+		sphere_contact(ray, sphere);
 		sphere = sphere->next;
 	}
 }

@@ -32,8 +32,7 @@ SRC = 	src/main.c \
 		src/tracer/sphere.c \
 		src/tracer/cylinder.c \
 		src/tracer/cylinder_utils.c \
-		src/tracer/color.c \
-		src/tracer/contact.c
+		src/tracer/color.c
 
 OBJ = $(SRC:.c=.o)
 

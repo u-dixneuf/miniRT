@@ -249,19 +249,23 @@ t_return	extract_cylinder(t_minirt *mrt, char **info);
 /* tracer */
 t_return	mrt_tracer(t_minirt *mrt);
 
+/* vector utils */
 double		vector_norme(double vector[3]);
 void		set_vector(double vector[3], double x, double y, double z);
 void		normalize_vector(double vector[3]);
 double		scalar_product(double vec_a[3], double vec_b[3]);
 double		calc_distance(double pos_a[3], double pos_b[3]);
 
+/* vector */
 void		get_camera_vectors(t_camera *camera);
 void		get_cameragrid_vector(t_camera camera, t_ray *ray);
-void		get_lightcontact_vector(t_light light, t_ray *ray);
+void		get_lightcontact_vector(t_light light, t_ray *cray, t_ray *lray);
 void		get_closest_contact(t_minirt *mrt, t_ray *ray);
+
 void		check_sphere(t_ray *ray, t_sphere *sphere);
 void		check_plane(t_ray *ray, t_plane *plane);
 void		check_cylinder(t_ray *ray, t_cylinder *cylinder);
-int			get_color(t_ray *cray, t_ray *lray);
+
+int			get_color(t_minirt *mrt, t_ray *cray, t_ray *lray);
 
 #endif

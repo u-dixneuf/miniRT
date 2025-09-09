@@ -37,11 +37,17 @@ static int	trace_ray(t_minirt *mrt, int h, int w)
 	t_ray	light_ray;
 
 	mrt_memset(&camera_ray, 0, sizeof(t_ray));
+	mrt_memset(&light_ray, 0, sizeof(t_ray));
 	camera_ray.h = h;
 	camera_ray.w = w;
 	get_cameragrid_vector(mrt->camera, &camera_ray); // get vector going from camera to ray pixel
 	get_closest_contact(mrt, &camera_ray);
-	get_lightcontact_vector(mrt->light, &light_ray);
-	get_closest_contact(mrt, &light_ray);
-	return (get_color(&camera_ray, &light_ray));
+	if (camera_ray.obj_type) // if ray intersects with an object
+	{
+		get_lightcontact_vector(mrt->light, &camera_ray, &light_ray);
+		get_closest_contact(mrt, &light_ray);
+		return (get_color(mrt, &camera_ray, &light_ray));
+	}
+	return (0);
 }
+ 
