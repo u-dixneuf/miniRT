@@ -30,16 +30,8 @@ void	get_camera_vectors(t_camera *camera)
 	}
 }
 
-static void	fisheye_fix(double *ps,  double fov_rad, double wf, double hf)
+static void	fisheye_fix(double *ps, double fov_rad, double wf, double hf)
 {
-	if (wf > 0)
-		ps[0] = tan(fov_rad * wf / (SIZE - 1));
-	else
-		ps[0] = -tan(fov_rad * -wf / (SIZE - 1));
-	if (hf > 0)
-		ps[1] = tan(fov_rad * hf / (SIZE - 1));
-	else
-		ps[1] = -tan(fov_rad * -hf / (SIZE - 1));
 	printf("wf [%lf] hf [%lf] ws [%lf] hs [%lf]\n\n", wf, hf, ps[0], ps[1]);
 }
 
