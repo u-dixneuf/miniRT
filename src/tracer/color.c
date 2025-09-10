@@ -15,10 +15,10 @@ int	get_color(t_minirt *mrt, t_ray *cray, t_ray *lray)
 		if (fabs(lray->c_pos[i] - cray->c_pos[i]) > EPSILON)
 		{
 			same_contact_point = false;
-			printf("NO\n\n");
+			printf("NO\n");
 		}
 		else
-			printf("YES\n\n");
+			printf("YES\n");
 		i += 1;
 	}
 	// im not checking if the contact point is at the same object
@@ -43,7 +43,7 @@ int	get_color(t_minirt *mrt, t_ray *cray, t_ray *lray)
 		// final_color += (contact_color[1] + mrt->ambient.color[1]) * mrt->ambient.ratio * GREEN;
 		// final_color += (contact_color[2] + mrt->ambient.color[2]) * mrt->ambient.ratio * BLUE;
 		// return ((int)final_color);
-		printf("RED}\n");
+		printf("RED}\n----------------------------------------\n");
 		return (RED * 255);
 	}
 	// else need to check cases where ray contacts object on the same side
@@ -53,6 +53,6 @@ int	get_color(t_minirt *mrt, t_ray *cray, t_ray *lray)
 // 	final_color += (double)contact_color[1] * mrt->light.ratio * GREEN;
 // 	final_color += (double)contact_color[2] * mrt->light.ratio * BLUE;
 // 	return ((int)final_color); // returning green for debugging purposes
-	printf("GREEN}\n");
+	printf("GREEN}\n----------------------------------------\n");
 	return (GREEN * 255);	
 }

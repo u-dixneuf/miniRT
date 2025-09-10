@@ -30,25 +30,38 @@ void	get_camera_vectors(t_camera *camera)
 	}
 }
 
+static void	fisheye_fix(double *ps,  double fov_rad, double wf, double hf)
+{
+	if (wf > 0)
+		ps[0] = tan(fov_rad * wf / (SIZE - 1));
+	else
+		ps[0] = -tan(fov_rad * -wf / (SIZE - 1));
+	if (hf > 0)
+		ps[1] = tan(fov_rad * hf / (SIZE - 1));
+	else
+		ps[1] = -tan(fov_rad * -hf / (SIZE - 1));
+	printf("wf [%lf] hf [%lf] ws [%lf] hs [%lf]\n\n", wf, hf, ps[0], ps[1]);
+}
+
 void	get_cameragrid_vector(t_camera camera, t_ray *ray) /// fish-eye motherfucker
 {
-	double	pixel_size;
+	double	pixel_size[2]; // [w,h]
+	double	fov_rad;
 	double	w_factor;
 	double	h_factor;
-	double	fov_rad;
 	uint8_t	i;
 
 	fov_rad = (camera.fov * acos(-1)) / 180;
-	pixel_size = 2 * tan(fov_rad / 2) / SIZE;
 	w_factor = (ray->w - (SIZE / 2));
 	h_factor = (ray->h - (SIZE / 2));
+	fisheye_fix(pixel_size, fov_rad, w_factor, h_factor);
 	i = 0;
 	while (i < 3)
 	{
 		ray->pos[i] = camera.pos[i];
 		ray->vector[i] = camera.vector[i];
-		ray->vector[i] += w_factor * pixel_size * camera.w_vector[i];
-		ray->vector[i] += h_factor * pixel_size * camera.h_vector[i];
+		ray->vector[i] += pixel_size[0] * camera.w_vector[i];
+		ray->vector[i] += pixel_size[1] * camera.h_vector[i];
 		i += 1;
 	}
 	normalize_vector(ray->vector);
@@ -72,5 +85,5 @@ void	get_closest_contact(t_minirt *mrt, t_ray *ray)
 {
 	check_plane(ray, mrt->plane);
 	check_sphere(ray, mrt->sphere);
-	check_cylinder(ray, mrt->cylinder); //TODO
+	check_cylinder(ray, mrt->cylinder);
 }

@@ -7,6 +7,8 @@ void	check_cylinder(t_ray *ray, t_cylinder *cylinder)
 {
 	while (cylinder)
 	{
+		// because parsing doenst check norme
+		normalize_vector(cylinder->vector);
 		cylinder_contact(ray, cylinder);
 		cylinder = cylinder->next;
 	}
@@ -38,7 +40,7 @@ static void	cylinder_contact(t_ray *ray, t_cylinder *cyl)
 		d = t * scalar_product(ray->vector, cyl->vector);
 		d -= scalar_product(vec_mc, cyl->vector);
 		if (fabs(d) <= cyl->height / 2)
-			contact_data(d, ray, cyl);
+			contact_data(t, ray, cyl);
 	}
 }
 

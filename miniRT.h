@@ -68,7 +68,7 @@
 # define RED		0x010000
 # define GREEN		0x000100
 # define BLUE		0x000001
-# define EPSILON	0.0001 // need to search why comparing floats isnt precise
+# define EPSILON	0.000001 // need to search why comparing floats isnt precise
 
 typedef enum e_return
 {
