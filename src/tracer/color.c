@@ -11,14 +11,13 @@ int	get_color(t_minirt *mrt, t_ray *cray, t_ray *lray)
 	i = 0;
 	while (i < 3 && same_contact_point)
 	{
-		printf("%lf == %lf?\n", lray->c_pos[i], cray->c_pos[i]);
+		//printf("%lf == %lf?\n", lray->c_pos[i], cray->c_pos[i]);
 		if (fabs(lray->c_pos[i] - cray->c_pos[i]) > EPSILON)
 		{
 			same_contact_point = false;
-			printf("NO\n");
+			//printf("NO\n");
 		}
-		else
-			printf("YES\n");
+			//printf("YES\n");
 		i += 1;
 	}
 	// im not checking if the contact point is at the same object
@@ -31,9 +30,9 @@ int	get_color(t_minirt *mrt, t_ray *cray, t_ray *lray)
 	// else
 	// 	contact_color = ((t_plane *)(cray->obj_ptr))->color;
 	/* debug */
-		printf("ray [h:%d][w:%d], cp [%lf][%lf][%lf], lcp [%lf][%lf][%lf], color: {",
-			cray->h, cray->w, cray->c_pos[0], cray->c_pos[1], cray->c_pos[2],
-			lray->c_pos[0], lray->c_pos[1], lray->c_pos[2]);
+		//printf("ray [h:%d][w:%d], cp [%lf][%lf][%lf], lcp [%lf][%lf][%lf], color: {",
+		//	cray->h, cray->w, cray->c_pos[0], cray->c_pos[1], cray->c_pos[2],
+		//	lray->c_pos[0], lray->c_pos[1], lray->c_pos[2]);
 	/* debug */
 	if (!same_contact_point)
 	{
@@ -43,7 +42,7 @@ int	get_color(t_minirt *mrt, t_ray *cray, t_ray *lray)
 		// final_color += (contact_color[1] + mrt->ambient.color[1]) * mrt->ambient.ratio * GREEN;
 		// final_color += (contact_color[2] + mrt->ambient.color[2]) * mrt->ambient.ratio * BLUE;
 		// return ((int)final_color);
-		printf("RED}\n----------------------------------------\n");
+		//printf("RED}\n----------------------------------------\n");
 		return (RED * 255);
 	}
 	// else need to check cases where ray contacts object on the same side
@@ -53,6 +52,6 @@ int	get_color(t_minirt *mrt, t_ray *cray, t_ray *lray)
 // 	final_color += (double)contact_color[1] * mrt->light.ratio * GREEN;
 // 	final_color += (double)contact_color[2] * mrt->light.ratio * BLUE;
 // 	return ((int)final_color); // returning green for debugging purposes
-	printf("GREEN}\n----------------------------------------\n");
-	return (GREEN * 255);	
+	//printf("GREEN}\n----------------------------------------\n");
+	return (0xffffff);	
 }

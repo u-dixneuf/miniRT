@@ -7,8 +7,8 @@ void	check_cylinder(t_ray *ray, t_cylinder *cylinder)
 {
 	while (cylinder)
 	{
-		// because parsing doenst check norme
-		normalize_vector(cylinder->vector);
+		normalize_vector(cylinder->vector); // because parsing doenst check norme
+		printf("norme of vector %lf\n", vector_norme(cylinder->vector));
 		cylinder_contact(ray, cylinder);
 		cylinder = cylinder->next;
 	}

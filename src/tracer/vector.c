@@ -28,39 +28,30 @@ void	get_camera_vectors(t_camera *camera)
 		set_vector(W, T[1] / f, -T[0] / f, 0);
 		set_vector(H, -T[0] * T[2] / f, -T[1] * T[2] / f, (T[0] * T[0] + T[1] * T[1]) / f);
 	}
+	normalize_vector(W);
+	normalize_vector(H); // necessary?
 }
 
 void	get_cameragrid_vector(t_camera camera, t_ray *ray) /// fish-eye motherfucker
 {
-	// double	pixel_size[2]; // [w,h]
-	// double	fov_rad;
-	// double	base_ps;
-	// uint8_t	i;
-
-	// fov_rad = (camera.fov * acos(-1)) / 180;
-	// base_ps = 2 * tan(fov_rad) / (SIZE - 1);
-	// pixel_size[0] = base_ps;
-	// pixel_size[1] = base_ps;
-	// fisheye_fix(pixel_size, fov_rad / (SIZE - 1),
-	// 		ray->w - (SIZE - 1) / 2, ray->h - (SIZE - 1) / 2);
-	// i = 0;
-	// while (i < 3)
-	// {
-	// 	ray->pos[i] = camera.pos[i];
-	// 	ray->vector[i] = camera.vector[i];
-	// 	ray->vector[i] += pixel_size[0] * camera.w_vector[i];
-	// 	ray->vector[i] += pixel_size[1] * camera.h_vector[i];
-	// 	i += 1;
-	// }
-	// normalize_vector(ray->vector);
+	// ???
+	int8_t	i;
 	double	pfov;
-	double	wf;
-	double	hf;
+	double	wa;
+	double	ha;
 
 	pfov = ((camera.fov * acos(-1)) / 180) / (SIZE - 1);
-	wf = ray->w - (SIZE - 1) / 2;
-	hf = ray->h - (SIZE - 1) / 2;
-	
+	wa = pfov * (ray->w - (SIZE - 1) / 2);
+	ha = pfov * (ray->h - (SIZE - 1) / 2);
+	i = 0;
+	while (i < 3)
+	{
+		ray->pos[i] = camera.pos[i];
+		ray->vector[i] = sqrt(1 - pow(sin(wa), 2) - pow(sin(ha), 2)) * camera.vector[i] +
+			sin(wa) * camera.w_vector[i] + sin(ha) * camera.h_vector[i];
+		i += 1;
+	}
+	normalize_vector(ray->vector);
 }
 
 void	get_lightcontact_vector(t_light light, t_ray *cray, t_ray *lray)
